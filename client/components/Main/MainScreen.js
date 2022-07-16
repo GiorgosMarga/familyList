@@ -17,7 +17,7 @@ import AddItem from "./AddItem";
 import deleteList from "../../requests/deleteList";
 // Error if jwt not valid and user not found
 export const MainScreen = ({navigation}) => {
-    const {jwt,setJWT,socket,setSocket} = useContext(MyContext);
+    const {jwt,setJWT,socket} = useContext(MyContext);
     const [showLists,setShowLists] = useState(false);
     const [lists,setLists] = useState([]);
     const [loadingOnCreateItem, setLoadingOnCreateItem] = useState(false);
@@ -93,6 +93,7 @@ export const MainScreen = ({navigation}) => {
     const createItemHandler = () => {
         if(itemName.length === 0 || itemPrice.length === 0 || itemQuantity.length === 0){
             setError("Please provide: Name, Price and Quantity")
+            setShowAddItem(false)
             return;
         }
         setLoadingOnCreateItem(true)
@@ -156,7 +157,7 @@ export const MainScreen = ({navigation}) => {
                     <FlatList
                         removeClippedSubviews={false}
                         keyboardDismissMode="none"
-                        style={[{borderWidth:2,borderTopLeftRadius:10,borderTopRightRadius:10},styles.list]} 
+                        style={[{borderTopWidth:2},styles.list]} 
                         data={items}
                         renderItem={({index,item}) => <Item name={item.name} price={item.price} quantity={item.quantity} key={index} store={"Lidl"}/>}
                         extraData={items}
@@ -164,7 +165,7 @@ export const MainScreen = ({navigation}) => {
                 </View>
                 {loadingOnCreateItem && <View style={styles.loading}><Text style={styles.loadingText}>Adding Item</Text><Loading/></View>}
                 {error !== "" && <Text style={{color:"red",width:"100%",paddingLeft:20,fontSize:18}}>{`${error}`}</Text>}
-                {!showAddItem && <TouchableOpacity onPress={() => {
+                {!showAddItem && currentList.length !== 0 && <TouchableOpacity onPress={() => {
         setShowLists(false)
         setShowAddItem(true)}} style={{backgroundColor:"black",marginBottom:10,padding:7,borderRadius:5}}><Text style={{color:"white"}}>Add Item</Text></TouchableOpacity>}
                 {showAddItem && <AddItem itemName={itemName} itemPrice={itemPrice} itemQuantity={itemQuantity} itemStore={itemStore} setItemName={setItemName} setItemPrice={setItemPrice} setItemQuantity={setItemQuantity} setItemStore={setItemStore} createItemHandler={createItemHandler} showAddItemHandler={addItemHandler}/>}
