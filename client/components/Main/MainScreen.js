@@ -8,11 +8,13 @@ import Loading from "../Loading/Loading";
 import fetchLists from "../../requests/fetchLists";
 import createList from "../../requests/createList";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import IoIcon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import fetchAllItems from "../../requests/fetchAllItems";
 import joinList from "../../requests/joinList";
 import Item from "./Item";
 import AddItem from "./AddItem";
+import deleteList from "../../requests/deleteList";
 // Error if jwt not valid and user not found
 export const MainScreen = ({navigation}) => {
     const {jwt,setJWT,socket,setSocket} = useContext(MyContext);
@@ -21,8 +23,8 @@ export const MainScreen = ({navigation}) => {
     const [loadingOnCreateItem, setLoadingOnCreateItem] = useState(false);
     const [loading,setLoading] = useState(false);
     const [error,setError] = useState("");
-    const [listName,setListName] = useState("");
-    const [listId,setListId] = useState("");
+    const [listName,setListName] = useState("");// for textinput state
+    const [listId,setListId] = useState("");// for textinput state
     const [currentList, setCurrentList] = useState("");
     const [items,setItems] = useState([]);
     const decoded = jwt ? jwt_decode(jwt) : null;
@@ -111,6 +113,10 @@ export const MainScreen = ({navigation}) => {
     const addItemHandler = () => {
         setShowAddItem(prev => !prev);
     }
+
+    const deleteListHandler = (listId) => {
+        deleteList(listId,setLoading,jwt,setLists,setError,setCurrentList);
+    }
     return (
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 40 : 50}>
                 <View style={styles.headerWrapper}>
@@ -139,12 +145,10 @@ export const MainScreen = ({navigation}) => {
                             extraData={lists}
                             style={[{elevation: 20,shadowColor: '#52006A'},styles.listsContainer]}
                             data={lists}
-                            renderItem={({item,index}) => <TouchableOpacity onPress={() => {
-                            
+                            renderItem={({item,index}) => <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between",paddingLeft:20,paddingRight:20}}  key={index}><TouchableOpacity onPress={() => {
                                 socket.emit("leaveList",currentList.split("-")[1]);
-                        
                                 setCurrentList(item)
-                            }} key={index}><Text style={styles.listName}>{item.split("-")[0]}</Text></TouchableOpacity>}>
+                            }}><Text style={styles.listName}>{item.split("-")[0]}</Text></TouchableOpacity><TouchableOpacity onPress={() => deleteListHandler(item.split("-")[1])}><IoIcon name="trash-bin" size={20}/></TouchableOpacity></View>}>
                         </FlatList>
                     }
                 <View style={{flexDirection:"row",justifyContent:"space-between",width:"100%",paddingRight:20,alignItems:"flex-end"}}><Text style={styles.currentListHeader}>{`Currect List: ${currentList.split("-")[0]}`}</Text><Text>{`Id: ${currentList.split('-')[1] ?currentList.split('-')[1]:"" }`}</Text></View>
