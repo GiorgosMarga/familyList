@@ -6,6 +6,6 @@ React-Native
 
 # Backend
 2 servers with nodejs, express and socket.io.
-One is dedicated to Authentication
-The second one, is dedicated to socket.io requests
+One is dedicated to Authentication.
+The second one, is dedicated to socket.io requests.
 
