@@ -28,8 +28,8 @@ const Item = ({name,price,quantity,store,itemId}) => {
             <View style={{flexDirection:"row",justifyContent:"space-between"}}>
                 <Text style={check ? [styles.item,{textDecorationLine: 'line-through'}]:styles.item}>{name}</Text>
                 <View style={{flexDirection:"row", alignItems:"center"}}>
-                    <Text style={styles.item}>{`P:${price}$`}</Text>
-                    <Text style={styles.item}>{`Qnty:${quantity}`}</Text>
+                    <Text style={check ? [styles.item,{textDecorationLine: 'line-through'}]:styles.item}>{`P:${price}$`}</Text>
+                    <Text style={check ? [styles.item,{textDecorationLine: 'line-through'}]:styles.item}>{`Qnty:${quantity}`}</Text>
                     <ShowIcon trueIcon={"chevron-up"} falseIcon={"chevron-down"} styleIcon={styles.icon} handler={showMoreHandler} variable={showMore}/>
                     <IoIcon onPress={checkItemHandler} size={30} name="checkmark-circle-outline"/>
                 </View>

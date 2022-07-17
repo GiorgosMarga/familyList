@@ -56,11 +56,11 @@ export const MainScreen = ({navigation}) => {
         if(currentList){
             socket.emit("joinList",currentList.split("-")[1]);
         }
-        () => console.log("Joined list")
     },[currentList])
     
     useEffect(() => {
         socket.on("newItem", (item) => {
+            setItemStore("")
             setItemName("")
             setItemPrice("")
             setItemQuantity("")
@@ -71,6 +71,7 @@ export const MainScreen = ({navigation}) => {
     },[socket])
 
     const showListsHandler = () => {
+        setShowAddItem(false);
         setShowLists((prev) => !prev);
     }
 
@@ -158,8 +159,9 @@ export const MainScreen = ({navigation}) => {
                         keyboardDismissMode="none"
                         style={[{borderTopWidth:2},styles.list]} 
                         data={items}
-                        renderItem={({index,item}) => <Item name={item.name} price={item.price} quantity={item.quantity} key={index} store={"Lidl"} itemId={item._id}/>}
+                        renderItem={({index,item}) => <Item name={item.name} price={item.price} quantity={item.quantity} key={index} store={item.market ? item.market : "Not specified"} itemId={item._id}/>}
                         extraData={items} 
+                        ListFooterComponent={items.length === 0 && <Text style={{padding:15,letterSpacing:1,fontWeight:"200"}}>No items found.</Text>}
                     />
                 </View>
                 {loadingOnCreateItem && <View style={styles.loading}><Text style={styles.loadingText}>Adding Item</Text><Loading/></View>}
