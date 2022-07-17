@@ -9,9 +9,11 @@ React-Native
 One is dedicated to Authentication.
 The second one, is dedicated to socket.io requests.
 
+<div> 
+  <img src="https://github.com/GiorgosMarga/familyList/blob/main/Login.jpg" Go.jpg width="150" height="280">
+  <img src="https://github.com/GiorgosMarga/familyList/blob/main/Register.jpg" Go.jpg width="150" height="280">
+  <img src="https://github.com/GiorgosMarga/familyList/blob/main/Main_Screen_1.jpg" Go.jpg width="150" height="280">
+  <img src="https://github.com/GiorgosMarga/familyList/blob/main/Main_Screen_2.jpg" Go.jpg width="150" height="280">
+  <img src="https://github.com/GiorgosMarga/familyList/blob/main/Main_Screen_3.jpg" Go.jpg width="150" height="280">
+</div>
 
-<img src="https://github.com/GiorgosMarga/familyList/blob/main/Login.jpg" Go.jpg width="150" height="280">
-<img src="https://github.com/GiorgosMarga/familyList/blob/main/Register.jpg" Go.jpg width="150" height="280">
-<img src="https://github.com/GiorgosMarga/familyList/blob/main/Main_Screen_1.jpg" Go.jpg width="150" height="280">
-<img src="https://github.com/GiorgosMarga/familyList/blob/main/Main_Screen_2.jpg" Go.jpg width="150" height="280">
-<img src="https://github.com/GiorgosMarga/familyList/blob/main/Main_Screen_3.jpg" Go.jpg width="150" height="280">
