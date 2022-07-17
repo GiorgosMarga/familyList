@@ -4,7 +4,7 @@ familyList is an app, where all memebers of the family and friends can join toge
 # Front-end
 React-Native
 
-#Backend
+# Backend
 2 servers with nodejs, express and socket.io.
 One is dedicated to Authentication
 The second one, is dedicated to socket.io requests
