@@ -56,7 +56,7 @@ export const MainScreen = ({navigation}) => {
         if(currentList){
             socket.emit("joinList",currentList.split("-")[1]);
         }
-        () => {console.log("cleared")}
+        () => console.log("Joined list")
     },[currentList])
     
     useEffect(() => {
@@ -147,7 +147,6 @@ export const MainScreen = ({navigation}) => {
                             style={[{elevation: 20,shadowColor: '#52006A'},styles.listsContainer]}
                             data={lists}
                             renderItem={({item,index}) => <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between",paddingLeft:20,paddingRight:20}}  key={index}><TouchableOpacity onPress={() => {
-                                socket.emit("leaveList",currentList.split("-")[1]);
                                 setCurrentList(item)
                             }}><Text style={styles.listName}>{item.split("-")[0]}</Text></TouchableOpacity><TouchableOpacity onPress={() => deleteListHandler(item.split("-")[1])}><IoIcon name="trash-bin" size={20}/></TouchableOpacity></View>}>
                         </FlatList>
@@ -159,8 +158,8 @@ export const MainScreen = ({navigation}) => {
                         keyboardDismissMode="none"
                         style={[{borderTopWidth:2},styles.list]} 
                         data={items}
-                        renderItem={({index,item}) => <Item name={item.name} price={item.price} quantity={item.quantity} key={index} store={"Lidl"}/>}
-                        extraData={items}
+                        renderItem={({index,item}) => <Item name={item.name} price={item.price} quantity={item.quantity} key={index} store={"Lidl"} itemId={item._id}/>}
+                        extraData={items} 
                     />
                 </View>
                 {loadingOnCreateItem && <View style={styles.loading}><Text style={styles.loadingText}>Adding Item</Text><Loading/></View>}

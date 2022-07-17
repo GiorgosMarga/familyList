@@ -1,9 +1,12 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import { View, Text } from 'react-native'
 import styles from "./MainScreen.module.css"
 import IoIcon from 'react-native-vector-icons/Ionicons';
 import { ShowIcon } from './ShowIcon';
-const Item = ({name,price,quantity,store}) => {
+import MyContext from '../../context/context';
+
+const Item = ({name,price,quantity,store,itemId}) => {
+    const {socket,jwt} = useContext(MyContext);
     const [showMore,setShowMore] = useState(false);
     const [check,setCheck] = useState(false);
 
@@ -14,6 +17,10 @@ const Item = ({name,price,quantity,store}) => {
 
     const checkItemHandler = () => {
         setCheck(prev => !prev)
+        socket.emit("deleteItem",{
+            token: jwt,
+            itemId
+        })
     }
 
     return (
