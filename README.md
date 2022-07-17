@@ -9,4 +9,4 @@ React-Native
 One is dedicated to Authentication.
 The second one, is dedicated to socket.io requests.
 
-![image](Screenshot_20220717-175735_Expo%20Go.jpg | width=200)
+![image](Screenshot_20220717-175735_Expo%20Go.jpg)
