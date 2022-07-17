@@ -9,3 +9,4 @@ React-Native
 One is dedicated to Authentication.
 The second one, is dedicated to socket.io requests.
 
+![Screenshot](screenshot.png)
