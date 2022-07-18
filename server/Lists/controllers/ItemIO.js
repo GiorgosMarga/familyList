@@ -11,7 +11,7 @@ const createItem = async (req) => {
     if(!isTokenValid){
         return {msg: "Invalid token"};
     }
-    const userId = jwt.decode(req.token).id;
+    const {id:userId,name:userName} = jwt.decode(req.token);
     req.user = userId;
     const item = await Item.create({...req,user:userId});
     

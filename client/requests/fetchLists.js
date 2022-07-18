@@ -1,8 +1,10 @@
 import axios from "axios";
+import LOCALHOST from "../env"
+
 
 const fetchLists = (jwt,setLists,setCurrentList,setLoading,setError) => {
     setLoading(true);
-    axios.get('http://192.168.31.208:5050/api/v1/user/getAllLists',
+    axios.get(`${LOCALHOST}:5050/api/v1/user/getAllLists`,
       {
         headers: {
             Authorization: 'Bearer ' + jwt //the token is a variable which holds the token

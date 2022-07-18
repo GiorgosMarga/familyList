@@ -1,4 +1,6 @@
 import axios from "axios";
+import LOCALHOST from "../env"
+
 
 const register = (password,confirmPassword,name,email,setJWT,setError,setLoading) => {
       if(password !== confirmPassword){
@@ -7,7 +9,7 @@ const register = (password,confirmPassword,name,email,setJWT,setError,setLoading
       }
       if(name.length !== 0 && password.length >= 6 && password === confirmPassword && email.length > 3){
         setLoading(true)
-        axios.post('http://192.168.31.208:5050/api/v1/auth/register',
+        axios.post(`${LOCALHOST}:5050/api/v1/auth/register`,
           {
             username:name,
             email,

@@ -1,8 +1,8 @@
 import axios from "axios"
-
+import LOCALHOST from "../env"
 const createList = (listName,setLoading,jwt,setLists,setError,setListName) => {
     setLoading(true);
-    axios.patch('http://192.168.31.208:5050/api/v1/user/addList',
+    axios.patch(`${LOCALHOST}:5050/api/v1/user/addList`,
       {
         listId: listName
       },

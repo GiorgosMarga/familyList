@@ -1,8 +1,10 @@
 import axios from "axios"
+import LOCALHOST from "../env"
+
+
 const joinList = (listId,setLoading,jwt,setLists,setError,setListId) => {
     setLoading(true)
-    console.log(`http://192.168.31.208:5050/api/v1/user/joinList/${listId}`)
-    axios.get(`http://192.168.31.208:5050/api/v1/user/joinList/${listId}`,
+    axios.get(`${LOCALHOST}:5050/api/v1/user/joinList/${listId}`,
     {
       headers: {
           Authorization: 'Bearer ' + jwt //the token is a variable which holds the token

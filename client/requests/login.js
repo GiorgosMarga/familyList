@@ -1,8 +1,11 @@
 import axios from "axios";
+import LOCALHOST from "../env"
+
+
 const login = (password,email,setLoading,setError,setJWT,setEmail,setPassword) => {
     if(password.length >= 6 && email.length > 3){
         setLoading(true);
-        axios.post('http://192.168.31.208:5050/api/v1/auth/login',
+        axios.post(`${LOCALHOST}:5050/api/v1/auth/login`,
           {
             email,
             password

@@ -1,8 +1,10 @@
 import axios from "axios"
+import LOCALHOST from "../env"
+
 
 const deleteList = (listId,setLoading,jwt,setLists,setError,setCurrentList) => {
     setLoading(true);
-    axios.patch('http://192.168.31.208:5050/api/v1/user/deleteList',
+    axios.patch(`${LOCALHOST}:5050/api/v1/user/deleteList`,
       {
         listId: listId
       },
