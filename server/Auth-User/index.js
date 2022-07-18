@@ -16,6 +16,7 @@ const errorHandlerMiddleware = require('./middlewares/error-handler');
 app.use(cors());
 
 //middlewares
+app.use(express.static("public"));
 app.use(express.json());
 
 app.use('/api/v1/auth',authRouter);

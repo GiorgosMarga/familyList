@@ -1,12 +1,14 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import { View , Text, TouchableOpacity} from 'react-native';
 import {useState} from 'react';
 import styles from "./Auth.module.css"
 import TextInputComponent from './TextInputComponent';
-import axios from "axios"
 import MyContext from '../../context/context';
 import Loading from "../Loading/Loading";
 import login from '../../requests/login';
+import * as Linking from 'expo-linking';
+import * as WebBrowser from 'expo-web-browser';
+
 
 
 export const Login = ({navigation}) => {
@@ -15,6 +17,10 @@ export const Login = ({navigation}) => {
     const [password,setPassword] = useState("");
     const [email,setEmail] = useState("");
     const {jwt,setJWT} = React.useContext(MyContext);
+    
+    const handleOpenWithLinking = () => {
+      Linking.openURL('http://192.168.31.208:5050/');
+    };
 
     const signInHandler = () => {
       login(password,email,setLoading,setError,setJWT,setEmail,setPassword);
@@ -39,10 +45,11 @@ export const Login = ({navigation}) => {
         <TextInputComponent placeholder={"Password"} secure={true} onChange={passwordChangeHandler} value={password}/>
         {error.length > 0 && <Text style={styles.error}>{error}</Text>}
         <TouchableOpacity onPress={registerHandler}><Text style={styles.text}>Don't Have an Account? Sign up.</Text></TouchableOpacity>
-        <Text style={styles.text}>Forgot Password?</Text>
+        <TouchableOpacity onPress={handleOpenWithLinking}><Text style={styles.text}>Forgot Password?</Text></TouchableOpacity>
         <TouchableOpacity style={styles.loginBtn} onPress={signInHandler}>
           <Text style={{color: "white", textAlign:"center", fontSize: 15, fontWeight:"bold"}}>Sign In</Text>
         </TouchableOpacity>
     </View>
   )
 }
+
