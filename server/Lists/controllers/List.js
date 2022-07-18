@@ -8,7 +8,7 @@ const getAllItemsForList = async (req,res) => {
     if(!listId || !userId){
         throw new Error.BadRequestError("Provide listId and userId");
     }
-    const items = await Item.find({listId});
+    const items = await Item.find({listId,deleted:false});
     res.status(StatusCodes.OK).json({items, count:items.length});
 }
 

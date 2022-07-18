@@ -13,7 +13,7 @@ const Item = mongoose.Schema({
     },
     user: {
         type: mongoose.Schema.ObjectId,
-        ref: 'User',
+        ref: 'user',
         required: true
     },
     listId: {
@@ -22,6 +22,10 @@ const Item = mongoose.Schema({
     quantity:{
         type: Number,
         default:1
+    },
+    deleted: {
+        type: Boolean,
+        default:false
     }
 }, {timestamps: true})
 

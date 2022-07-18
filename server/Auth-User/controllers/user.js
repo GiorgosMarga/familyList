@@ -66,7 +66,7 @@ const deleteListFromUser = async (req,res) => {
     if(!user){
         throw new Error.NotFoundError("User not found");
     }
-    const newLists = user.lists.filter((id) => listId !== id);
+    const newLists = user.lists.filter((id) => {listId !== id.split("-")[1]});
     const newUser = await User.findOneAndUpdate({_id:userId},{lists:newLists},{new:true});
     res.status(StatusCodes.OK).json({lists: newUser.lists});
 }

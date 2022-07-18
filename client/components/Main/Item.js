@@ -5,7 +5,7 @@ import IoIcon from 'react-native-vector-icons/Ionicons';
 import { ShowIcon } from './ShowIcon';
 import MyContext from '../../context/context';
 
-const Item = ({name,price,quantity,store,itemId}) => {
+const Item = ({name,price,quantity,store,itemId,userName}) => {
     const {socket,jwt} = useContext(MyContext);
     const [showMore,setShowMore] = useState(false);
     const [check,setCheck] = useState(false);
@@ -37,6 +37,7 @@ const Item = ({name,price,quantity,store,itemId}) => {
             {showMore && <View style={{maxHeight:180,height:180,width:"100%",paddingLeft:20}}>
                 <Text style={{fontSize:15}}>{`Store: ${store}`}</Text>    
                 <Text style={{fontSize:15}}>{`Image: No Image`}</Text>    
+                <Text style={{fontSize:15}}>{`By: ${userName}`}</Text>    
             </View>}
         </View>
   )

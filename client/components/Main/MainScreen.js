@@ -59,13 +59,14 @@ export const MainScreen = ({navigation}) => {
     },[currentList])
     
     useEffect(() => {
-        socket.on("newItem", (item) => {
+        socket.on("newItem", (item,userName) => {
             setItemStore("")
             setItemName("")
             setItemPrice("")
             setItemQuantity("")
             setLoadingOnCreateItem(false)
             setError("");
+            item = {...item,userName}
             setItems((prevState) => [...prevState,item])
         })
     },[socket])
@@ -159,7 +160,7 @@ export const MainScreen = ({navigation}) => {
                         keyboardDismissMode="none"
                         style={[{borderTopWidth:2},styles.list]} 
                         data={items}
-                        renderItem={({index,item}) => <Item name={item.name} price={item.price} quantity={item.quantity} key={index} store={item.market ? item.market : "Not specified"} itemId={item._id}/>}
+                        renderItem={({index,item}) => <Item name={item.name} price={item.price} quantity={item.quantity} key={index} store={item.market ? item.market : "Not specified"} itemId={item._id} userName={item.userName} />}
                         extraData={items} 
                         ListFooterComponent={items.length === 0 && <Text style={{padding:15,letterSpacing:1,fontWeight:"200"}}>No items found.</Text>}
                     />

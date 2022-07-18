@@ -32,12 +32,12 @@ io.on("connection", (socket) => {
     })
 
     socket.on("createItem", async (data) => {
-        const item = await createItem(data);
-        io.in(data.listId).emit("newItem",item);
+        const result = await createItem(data);
+        io.in(data.listId).emit("newItem",result.item,result.userName);
     })
     socket.on("deleteItem", async (data) => {
         const item = await deleteItem(data);
-        io.in("abc").emit("deletedItem",item);
+        //io.in(data.listId).emit("deletedItem",item);
     })
 
     socket.on("disconnect", () => {

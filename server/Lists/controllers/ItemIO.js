@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 const Item = require('../Models/Item');
 const verifyJWT = require("../utils/verifyJWT");
+const User = require("../../Auth-User/Models/User");
+
 const createItem = async (req) => {
     if(!req || !req.token){
         return {msg: "Bad Request"};
@@ -12,24 +14,25 @@ const createItem = async (req) => {
     const userId = jwt.decode(req.token).id;
     req.user = userId;
     const item = await Item.create({...req,user:userId});
-    return item;
+    
+    return {item,userName};
 }
-
+// Move this to rest api
 const deleteItem = async (req) => {
     if(!req || !req.token){
         return {msg: "Bad Request"};
     }
-    console.log(req)
     const isTokenValid = verifyJWT(req.token);
     if(!isTokenValid){
         return {msg: "Invalid token"};
     }
     const userId = jwt.decode(req.token).id;
     
-    const item = await Item.findOneAndDelete({_id: req.itemId});
+    const item = await Item.findOneAndUpdate({_id: req.itemId},{deleted: true});
     if(!item || userId !== item.user.toString()){
         return {msg: "Item not found"}
     }
+
     return {msg: "Success"};
 }
 
