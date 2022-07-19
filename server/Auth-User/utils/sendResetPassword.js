@@ -10,11 +10,11 @@ const sendResetPasswordEmail = async ({username,email,origin,passwordResetToken}
     host: 'smtp.ethereal.email',
     port: 587,
     auth: {
-        user: 'kenny.oberbrunner75@ethereal.email',
-        pass: 'ZJ2zt1SPj86tpVdFnh'
+        user: 'elsie.goyette32@ethereal.email',
+        pass: 'NvztnmsVWygaCVaGks'
     }
-  });
-  const verifyLink = `${origin}/auth/resetPassword?token=${passwordResetToken}&email=${email}`;
+  }); 
+  const verifyLink = `${origin}/resetPassword.html?token=${passwordResetToken}&email=${email}`;
   const message = `<p>Please click the following link to reset your password: 
   <a href="${verifyLink}">Reset Password</a></p>`
   // send mail with defined transport object

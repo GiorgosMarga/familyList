@@ -84,6 +84,8 @@ const forgotPassword = async (req,res) => {
 
 const resetPassword = async (req,res) => {
     const {email,newPassword,token} = req.body;
+    
+    
     if(!email || !newPassword || !token){
         throw new Error.BadRequestError("Please provide all requirements");
     }

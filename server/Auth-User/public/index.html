@@ -1,1 +1,42 @@
-<h1>forgotPassword does't work right now! It will work asap!!!</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>familyList</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body class="body">
+	<form action="#" class="form">
+        <h1 class="title">familyList</h1>
+        <div>
+            <input id="email" class="input" placeholder="Email" type="email"/>
+        </div>
+        <button class="button" onclick="pressButton()">
+            Submit
+        </button>
+        <h3 id="text"></h3>
+    </form>
+  </body>
+  <script>
+    async function pressButton() {
+        const email = document.getElementById("email").value;
+        const response = await fetch("http://192.168.31.208:5050/api/v1/auth/forgot-password", {
+            method: 'POST',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+            body: `{
+                "email": "Peter@gmail.com"
+            }`,
+        });
+
+        response.json().then(data => {
+            document.getElementById("text").textContent = "Check your email!"
+            console.log(data)
+        }).catch(err => console.log(err));
+    }
+  </script>
+</html>
