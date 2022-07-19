@@ -7,7 +7,7 @@ import MyContext from '../../context/context';
 import Loading from "../Loading/Loading";
 import login from '../../requests/login';
 import * as Linking from 'expo-linking';
-import * as WebBrowser from 'expo-web-browser';
+import LOCALHOST from "../../env";
 
 
 
@@ -19,7 +19,7 @@ export const Login = ({navigation}) => {
     const {jwt,setJWT} = React.useContext(MyContext);
     
     const handleOpenWithLinking = () => {
-      Linking.openURL('http://192.168.31.208:5050/');
+      Linking.openURL(`${LOCALHOST}:5050/`);
     };
 
     const signInHandler = () => {
