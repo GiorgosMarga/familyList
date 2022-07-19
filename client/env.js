@@ -1,1 +1,0 @@
-export default LOCALHOST="http://192.168.31.208"
