@@ -44,6 +44,8 @@ export const MainScreen = ({ navigation }) => {
   const [showAddItem, setShowAddItem] = useState(false);
   const [itemStore, setItemStore] = useState("");
 
+  const [showCamera,setShowCamera] = useState(false);
+  const [image,setImage] = useState("")
   const onListNameHandler = (value) => {
     setListName(value);
   };
@@ -137,8 +139,10 @@ export const MainScreen = ({ navigation }) => {
   const deleteListHandler = (listId) => {
     deleteList(listId, setLoading, jwt, setLists, setError, setCurrentList);
   };
-  if(showAddItem){
-    return <TestCamera/>
+
+
+  if(showCamera){
+    return <TestCamera setShowCamera={setShowCamera} setImage={setImage}/>
   }
   return (
     <KeyboardAvoidingView
@@ -322,6 +326,7 @@ export const MainScreen = ({ navigation }) => {
           setItemStore={setItemStore}
           createItemHandler={createItemHandler}
           showAddItemHandler={addItemHandler}
+          setShowCamera={setShowCamera}
         />
       )}
     </KeyboardAvoidingView>

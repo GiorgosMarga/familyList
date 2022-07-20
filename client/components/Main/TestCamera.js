@@ -2,10 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity,SafeAreaView, Image } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from "expo-media-library"
-export default function TestCamera() {
+import Loading from '../Loading/Loading';
+export default function TestCamera({setShowCamera,setImage}) {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState(null);
   const [photo,setPhoto] = useState();
+  const [loading, setLoading] = useState(false);
   const cameraRef = useRef();
   useEffect(() => {
     (async () => {
@@ -17,19 +19,25 @@ export default function TestCamera() {
   }, []);
 
   const takePic = async () => {
-    console.log("Taking pic");
     const options = {
-        quality: 1,
         base64: true,
-        exif: false
+        exif: false,
+        skipProcessing:true
     }
     const newPhoto = await cameraRef.current.takePictureAsync(options);
     setPhoto(newPhoto);
   }
+
+  if(loading && photo !== null){
+    return <Loading/>
+  }
   if(photo){
     const savePic = () => {
         MediaLibrary.saveToLibraryAsync(photo.uri).then(() =>{
+            setImage(photo);
             setPhoto(null);
+            
+            setShowCamera(false);
         })
     }
     const discardPic = () => {
@@ -48,9 +56,12 @@ export default function TestCamera() {
   }
 
   return (
-      <Camera style={styles.camera} ref={cameraRef}>
+      <Camera style={styles.camera} ref={cameraRef} ratio={"16:9"} >
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={takePic} />
+          <TouchableOpacity style={styles.button} onPress={ () => {
+            // Calling takePic like this, makes it way faster
+            takePic()
+        } }/>
         </View>
       </Camera>
   );
