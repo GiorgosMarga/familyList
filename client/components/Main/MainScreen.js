@@ -22,6 +22,7 @@ import joinList from "../../requests/joinList";
 import Item from "./Item";
 import AddItem from "./AddItem";
 import deleteList from "../../requests/deleteList";
+import TestCamera from "./TestCamera";
 // Error if jwt not valid and user not found
 export const MainScreen = ({ navigation }) => {
   const { jwt, setJWT, socket } = useContext(MyContext);
@@ -136,6 +137,9 @@ export const MainScreen = ({ navigation }) => {
   const deleteListHandler = (listId) => {
     deleteList(listId, setLoading, jwt, setLists, setError, setCurrentList);
   };
+  if(showAddItem){
+    return <TestCamera/>
+  }
   return (
     <KeyboardAvoidingView
       style={styles.container}
