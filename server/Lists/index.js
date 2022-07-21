@@ -11,7 +11,12 @@ const errorHandlerMiddleware = require("./middlewares/error-handler");
 const itemRouter = require("./routes/item");
 const listRouter = require("./routes/list");
 const PORT = process.env.PORT || 3002;
-
+const cloudinary = require('cloudinary').v2
+cloudinary.config({
+    cloud_name:process.env.CLOUD_NAME,
+    api_key:process.env.CLOUD_API_KEY,
+    api_secret:process.env.CLOUD_API_SECRET
+})
 app.use(cors())
 
 const {createItem,deleteItem} = require("./controllers/ItemIO");
