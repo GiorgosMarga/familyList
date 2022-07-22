@@ -1,7 +1,7 @@
 const Item = require('../Models/Item')
 const Error = require("../errors");
 const {StatusCodes} = require("http-status-codes")
-
+const cloudinary = require('cloudinary')
 const getAllItems = async (req, res) => {
     const userId = req.user.id;
     if(!userId){
@@ -28,4 +28,22 @@ const getItem = async (req, res) => {
     }
     res.status(StatusCodes.OK).json({item});
 }
-module.exports = {getAllItems,getItem};
+
+const uploadImage = async (req,res) => {
+    const {itemId,image} = req.body;
+    const uploadStr = 'data:image/jpeg;base64,' + image.base64;
+
+    if(!itemId || !image){
+        throw new Error.BadRequestError("Please provide an id and an image");
+    }
+    try{
+        const uploadedResponse = await cloudinary.v2.uploader.upload(uploadStr,{timeout: 1000000});
+        console.log('Res',uploadedResponse);
+        return res.status(StatusCodes.OK).json({url: uploadedResponse.url})
+    }catch(err){
+        console.log(err)
+        throw new Error.CustomAPIError(`The was an erro uploading the image ${err}`)
+    }
+    
+}
+module.exports = {getAllItems,getItem,uploadImage};

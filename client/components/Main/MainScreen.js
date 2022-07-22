@@ -23,6 +23,7 @@ import Item from "./Item";
 import AddItem from "./AddItem";
 import deleteList from "../../requests/deleteList";
 import TestCamera from "./TestCamera";
+import uploadImage from "../../requests/uploadImage";
 // Error if jwt not valid and user not found
 export const MainScreen = ({ navigation }) => {
   const { jwt, setJWT, socket } = useContext(MyContext);
@@ -46,6 +47,8 @@ export const MainScreen = ({ navigation }) => {
 
   const [showCamera,setShowCamera] = useState(false);
   const [image,setImage] = useState("")
+  const [imageURL, setImageURL] = useState("");
+  const [uploadingImage, setUploadingImage] = useState("");
   const onListNameHandler = (value) => {
     setListName(value);
   };
@@ -53,10 +56,17 @@ export const MainScreen = ({ navigation }) => {
   const onListIdHandler = (value) => {
     setListId(value);
   };
-
   useEffect(() => {
     fetchLists(jwt, setLists, setCurrentList, setLoading, setError);
+    setImage("")
   }, []);
+
+  useEffect(() => { 
+    if(image !== ""){
+      uploadImage(image,"123",jwt,setImage,setImageURL,setUploadingImage);
+      setImage("");
+    };
+  }, [image])
 
   useEffect(() => {
     fetchAllItems(
@@ -126,6 +136,7 @@ export const MainScreen = ({ navigation }) => {
       user: decoded.id,
       token: jwt,
       market: itemStore ? itemStore : "",
+      image: imageURL
     };
     socket.emit("createItem", item);
   };
@@ -273,6 +284,7 @@ export const MainScreen = ({ navigation }) => {
               store={item.market ? item.market : "Not specified"}
               itemId={item._id}
               userName={item.userName}
+              imageUrl={item.image}
             />
           )}
           extraData={items}
@@ -327,6 +339,8 @@ export const MainScreen = ({ navigation }) => {
           createItemHandler={createItemHandler}
           showAddItemHandler={addItemHandler}
           setShowCamera={setShowCamera}
+          imageURL={imageURL}
+          uploadingImage={uploadingImage}
         />
       )}
     </KeyboardAvoidingView>

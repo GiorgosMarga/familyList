@@ -1,15 +1,14 @@
 import React,{useState,useContext} from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Image } from 'react-native'
 import styles from "./MainScreen.module.css"
 import IoIcon from 'react-native-vector-icons/Ionicons';
 import { ShowIcon } from './ShowIcon';
 import MyContext from '../../context/context';
 
-const Item = ({name,price,quantity,store,itemId,userName}) => {
+const Item = ({name,price,quantity,store,itemId,userName,imageUrl}) => {
     const {socket,jwt} = useContext(MyContext);
     const [showMore,setShowMore] = useState(false);
     const [check,setCheck] = useState(false);
-
 
     const showMoreHandler = () => {
         setShowMore(prevState => !prevState);
@@ -36,7 +35,8 @@ const Item = ({name,price,quantity,store,itemId,userName}) => {
             </View>
             {showMore && <View style={{maxHeight:180,height:180,width:"100%",paddingLeft:20}}>
                 <Text style={{fontSize:15}}>{`Store: ${store}`}</Text>    
-                <Text style={{fontSize:15}}>{`Image: No Image`}</Text>    
+                {!imageUrl && <Text style={{fontSize:15}}>{`Image: Not uploaded`}</Text>}
+                {imageUrl && <Image style={{width:100,height:100}} source={{uri: imageUrl}}/>} 
                 <Text style={{fontSize:15}}>{`By: ${userName}`}</Text>    
             </View>}
         </View>
