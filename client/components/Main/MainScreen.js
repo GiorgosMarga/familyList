@@ -235,7 +235,7 @@ export const MainScreen = ({ navigation }) => {
                 paddingLeft: 20,
                 paddingRight: 20,
               }}
-              key={index}
+              key={Math.random()}
             >
               <TouchableOpacity
                 onPress={() => {
