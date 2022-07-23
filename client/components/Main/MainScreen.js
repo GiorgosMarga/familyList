@@ -85,7 +85,7 @@ export const MainScreen = ({ navigation }) => {
   }, [currentList]);
 
   useEffect(() => {
-    socket.on("newItem", (item, userName) => {
+    socket.on("newItem", (item) => {
       setImage("");
       setImageURL("")
       setItemStore("");
@@ -94,7 +94,6 @@ export const MainScreen = ({ navigation }) => {
       setItemQuantity("");
       setLoadingOnCreateItem(false);
       setError("");
-      item = { ...item, userName };
       setItems((prevState) => [...prevState, item]);
     });
   }, [socket]);
@@ -138,7 +137,8 @@ export const MainScreen = ({ navigation }) => {
       user: decoded.id,
       token: jwt,
       market: itemStore ? itemStore : "",
-      image: imageURL
+      image: imageURL,
+      by: decoded.name
     };
     socket.emit("createItem", item);
   };
@@ -285,8 +285,9 @@ export const MainScreen = ({ navigation }) => {
               key={index}
               store={item.market ? item.market : "Not specified"}
               itemId={item._id}
-              userName={item.userName}
+              userName={item.by}
               imageUrl={item.image}
+              
             />
           )}
           extraData={items}
