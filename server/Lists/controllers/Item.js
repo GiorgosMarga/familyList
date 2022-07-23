@@ -30,19 +30,18 @@ const getItem = async (req, res) => {
 }
 
 const uploadImage = async (req,res) => {
-    const {itemId,image} = req.body;
-    const uploadStr = 'data:image/jpeg;base64,' + image.base64;
-
-    if(!itemId || !image){
+    const {image} = req.body;
+    const uploadStr = 'data:image/png;base64,'+image.base64;
+    
+    if(!image){
         throw new Error.BadRequestError("Please provide an id and an image");
     }
     try{
         const uploadedResponse = await cloudinary.v2.uploader.upload(uploadStr,{timeout: 1000000});
-        console.log('Res',uploadedResponse);
+        console.log(uploadImage)
         return res.status(StatusCodes.OK).json({url: uploadedResponse.url})
     }catch(err){
-        console.log(err)
-        throw new Error.CustomAPIError(`The was an erro uploading the image ${err}`)
+        throw new Error.CustomAPIError(`The was an error uploading the image ${err}`)
     }
     
 }

@@ -63,7 +63,7 @@ export const MainScreen = ({ navigation }) => {
 
   useEffect(() => { 
     if(image !== ""){
-      uploadImage(image,"123",jwt,setImage,setImageURL,setUploadingImage);
+      uploadImage(image,jwt,setImage,setImageURL,setUploadingImage);
       setImage("");
     };
   }, [image])
@@ -86,6 +86,8 @@ export const MainScreen = ({ navigation }) => {
 
   useEffect(() => {
     socket.on("newItem", (item, userName) => {
+      setImage("");
+      setImageURL("")
       setItemStore("");
       setItemName("");
       setItemPrice("");

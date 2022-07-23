@@ -17,15 +17,18 @@ export default function TestCamera({setShowCamera,setImage}) {
       setHasMediaLibraryPermission(mediaLibraryPermission === 'granted');
     })();
   }, []);
-
   const takePic = async () => {
     const options = {
         base64: true,
         exif: false,
-        skipProcessing:true
+        skipProcessing:true,
     }
-    const newPhoto = await cameraRef.current.takePictureAsync(options);
-    setPhoto(newPhoto);
+    try{
+        const newPhoto = await cameraRef.current.takePictureAsync(options);
+        setPhoto(newPhoto);
+    }catch(err){
+        console.log(err)
+    }
   }
 
   if(loading && photo !== null){
@@ -56,7 +59,7 @@ export default function TestCamera({setShowCamera,setImage}) {
   }
 
   return (
-      <Camera style={styles.camera} ref={cameraRef} ratio={"16:9"} >
+      <Camera style={styles.camera} ref={cameraRef} pictureSize={"320x240"}>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={ () => {
             // Calling takePic like this, makes it way faster

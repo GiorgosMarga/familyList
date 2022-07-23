@@ -53,8 +53,9 @@ const addListToUser = async (req,res) => {
     }
     const randomId = crypto.randomBytes(5).toString('hex');
     const newLists = [...user.lists,listId + "-" + randomId];
-    const newUser = await User.findOneAndUpdate({_id:userId},{lists:newLists},{new:true});
-    res.status(StatusCodes.OK).json({lists: newUser.lists});
+    user.lists = newLists;
+    await user.save()
+    res.status(StatusCodes.OK).json({lists: user.lists});
 }
 const deleteListFromUser = async (req,res) => {
     const userId = req.user.id;
@@ -67,7 +68,8 @@ const deleteListFromUser = async (req,res) => {
         throw new Error.NotFoundError("User not found");
     }
     const newLists = user.lists.filter((id) => listId !== id.split("-")[1]);
-    const newUser = await User.findOneAndUpdate({_id:userId},{lists:newLists},{new:true});
-    res.status(StatusCodes.OK).json({lists: newUser.lists});
+    user.lists = newLists;
+    await user.save()
+    res.status(StatusCodes.OK).json({lists: user.lists});
 }
 module.exports = {addListToUser,deleteListFromUser,getAllLists,joinList};

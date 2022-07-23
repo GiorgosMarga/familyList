@@ -1,11 +1,11 @@
 import axios from "axios"
 
 
-const uploadImage  = (image,itemId,jwt,setImage,setImageURL,setUploadingImage) => {
+const uploadImage  = async (image,jwt,setImage,setImageURL,setUploadingImage) => {
     setUploadingImage(true);
+    
     axios.post(`${LOCALHOST}:3002/api/v1/items/uploadImage`,
           {
-            itemId,
             image
           },
           {
@@ -13,7 +13,6 @@ const uploadImage  = (image,itemId,jwt,setImage,setImageURL,setUploadingImage) =
                 Authorization: 'Bearer ' + jwt //the token is a variable which holds the token
             }
           }).then((data) => {
-            console.log("data:",data.data.url)
             setImage("")
             setImageURL(data.data.url);
             setUploadingImage(false);
@@ -32,7 +31,7 @@ const uploadImage  = (image,itemId,jwt,setImage,setImageURL,setUploadingImage) =
               //setError("Server Internal Error. Please try later");
             }
         
-          });  
+          });
 }
 
 export default uploadImage;
