@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity,SafeAreaView, Image } from 'react-native';
-import { Camera } from 'expo-camera';
+import { Camera, CameraType } from 'expo-camera';
 import * as MediaLibrary from "expo-media-library"
 import Loading from '../Loading/Loading';
+import Icon from "react-native-vector-icons/Entypo";
+
 export default function TestCamera({setShowCamera,setImage}) {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState(null);
   const [photo,setPhoto] = useState();
   const [loading, setLoading] = useState(false);
+  const [type, setType] = useState(CameraType.back);
   const cameraRef = useRef();
   useEffect(() => {
     (async () => {
@@ -59,12 +62,20 @@ export default function TestCamera({setShowCamera,setImage}) {
   }
 
   return (
-      <Camera style={styles.camera} ref={cameraRef} pictureSize={"320x240"}>
+      <Camera style={styles.camera} ref={cameraRef} pictureSize={"320x240"} type={type} ratio={"4:3"}>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={ () => {
-            // Calling takePic like this, makes it way faster
-            takePic()
-        } }/>
+            <View style={styles.secondaryButton}>
+                <Icon name='cross' size={50} color={"white"} onPress={() => setShowCamera(false)}/>
+            </View>
+            <View style={styles.button}>
+                <Icon name='camera' size={40}  onPress={() => takePic()} color={"white"}/>
+            </View>
+            <View style={styles.secondaryButton}>
+                <Icon name='cycle' size={40} color={"white"} onPress={() => {
+                    setType(type === CameraType.back ? CameraType.front : CameraType.back);
+                }}/>
+            </View>
+
         </View>
       </Camera>
   );
@@ -72,22 +83,39 @@ export default function TestCamera({setShowCamera,setImage}) {
 
 const styles = StyleSheet.create({
     camera: {
-        height: "90%",
+        height: "100%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-end",
         alignItems: "center"
     },
     buttonContainer: {
-        width: 70,
-        height: 70,
-        borderRadius: 140,
-        backgroundColor: "#fff"
+        width: "100%",
+        height: 100,
+        flexDirection: "row",
+        justifyContent:"center",
+        alignItems:"center"
     },
     button: {
-        width:70,
-        height:70,
-        borderRadius:200
+        width:80,
+        height:80,
+        borderRadius:200,
+        marginBottom: 30,
+        marginRight: 30,
+        marginLeft: 30,
+        flexDirection: "row",
+        justifyContent:"center",
+        alignItems:"center",
+        borderColor:"white",
+        borderWidth:4,
+    },
+    secondaryButton:{
+        width:50,
+        height: 50,
+        borderRadius:100,
+        display:"flex",
+        justifyContent:"center",
+        alignItems:"center",
     },
     text: {
         color: "red"
